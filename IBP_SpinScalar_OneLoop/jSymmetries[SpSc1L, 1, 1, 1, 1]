@@ -1,0 +1,4 @@
+{{j[SpSc1L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, 
+    (n4_)?Positive] :> Expand[j[SpSc1L, n1, n2, n3, n4]]}, 
+ {j[SpSc1L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, 
+    (n4_)?Positive] :> Expand[j[SpSc1L, n1, n2, n4, n3]]}}

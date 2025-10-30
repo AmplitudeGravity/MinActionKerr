@@ -1,0 +1,109 @@
+BasisDirectory[SpSc1L] = StringDrop[DirectoryName[$Input], -1]
+SpSc1L /: BasisSectors[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/BasisSectors[SpSc1L]"]]
+SpSc1L /: CurrentState[SpSc1L] := <|NewDsBasis -> True, GenerateIBP -> True, 
+   AnalyzeSectors -> True, FindSymmetries -> False|>
+SpSc1L /: CutDs[SpSc1L] := {0, 1, 0, 0}
+SpSc1L /: Definitions[SpSc1L] := {Hold[MetricTensor[] === d, SetDim[d]], 
+   Hold[VecQ[l1], Declare[l1, Vector]], Hold[VecQ[qq], Declare[qq, Vector]], 
+   Hold[VecQ[v3], Declare[v3, Vector]], Hold[VecQ[v4], Declare[v4, Vector]], 
+   Hold[LiteRed`Private`ExpresionType[qq] === LiteRed`Private`ExpresionType[
+      qq], Declare[qq, LiteRed`Private`ExpresionType[qq]]], 
+   Hold[LiteRed`Private`ExpresionType[v3] === LiteRed`Private`ExpresionType[
+      v3], Declare[v3, LiteRed`Private`ExpresionType[v3]]], 
+   Hold[LiteRed`Private`ExpresionType[v4] === LiteRed`Private`ExpresionType[
+      v4], Declare[v4, LiteRed`Private`ExpresionType[v4]]], 
+   Hold[LiteRed`Private`ExpresionType[x] === LiteRed`Private`ExpresionType[
+      x], Declare[x, LiteRed`Private`ExpresionType[x]]], 
+   Hold[LiteRed`Private`ExpresionType[y] === LiteRed`Private`ExpresionType[
+      y], Declare[y, LiteRed`Private`ExpresionType[y]]], 
+   Hold[sp[qq, qq] === x, sp[qq, qq] = x], Hold[sp[v3, v3] === 1, 
+    sp[v3, v3] = 1], Hold[sp[v4, v4] === 1, sp[v4, v4] = 1], 
+   Hold[sp[qq, v3] === 0, sp[qq, v3] = 0], Hold[sp[qq, v4] === 0, 
+    sp[qq, v4] = 0], Hold[sp[v3, v4] === y, sp[v3, v4] = y]}
+SpSc1L /: Ds[SpSc1L] := {sp[l1, v3], sp[l1, v4], sp[l1, l1], 
+   sp[-l1 + qq, -l1 + qq]}
+SpSc1L /: DsBasisQ[SpSc1L] := True
+SpSc1L /: EMs[SpSc1L] := {qq, v3, v4}
+SpSc1L /: ExtMappedSectors[SpSc1L] := {}
+SpSc1L /: ExtSectorsMappings[SpSc1L] := {}
+SpSc1L /: IBP[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/IBP[SpSc1L]"]]
+SpSc1L /: Information[SpSc1L] := 
+  (If[ValueQ[SpSc1L::usage], Information[SpSc1L, LongForm -> False]]; 
+   Print[Grid[Partition[Union[Replace[Replace[First /@ UpValues[SpSc1L] /. 
+          HoldPattern -> HoldForm, 
+         {HoldPattern[HoldForm[(LiteRed`Private`f$_)[SpSc1L, __]]] :> 
+           HoldForm[LiteRed`Private`f$[SpSc1L, "\[Ellipsis]"]]}, {1}], 
+        {HoldPattern[LiteRed`Private`x$:HoldForm[(LiteRed`Private`f$_)[
+              SpSc1L, ___]]] :> Button[LiteRed`Private`x$, 
+           (SelectionMove[ButtonNotebook[], All, GeneratedCell]; 
+             NotebookDelete[]; Information[Evaluate[LiteRed`Private`x$[[1,
+                0]]], LongForm -> False]; Print[TableForm[Cases[UpValues[
+                  SpSc1L], HoldPattern[LiteRed`Private`a$_ :> 
+                    LiteRed`Private`b$_] /; MatchQ[LiteRed`Private`a$[[1,0]], 
+                   LiteRed`Private`x$[[1,0]]]] /. HoldPattern -> 
+                 HoldForm]]) & , Appearance -> "Frameless", 
+           BaseStyle -> "InformationLink"]}, {1}]], 5], 
+     DefaultBaseStyle -> "InfoGrid"]])
+SpSc1L /: jRules[SpSc1L, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[SpSc1L], "/jRules[SpSc1L, 0, 1, 1, 1]"]]
+SpSc1L /: jRules[SpSc1L, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[SpSc1L], "/jRules[SpSc1L, 1, 1, 1, 1]"]]
+SpSc1L /: jsOrder[SpSc1L] := {"np", "cp", "-ds", "-ns"}
+SpSc1L /: jsOrder[SpSc1L, 0, 0, 1, 1] := {{-1, -1, 1, 1}, {-1, -1, 0, 0}, 
+   {0, 0, -1, 0}, {1, 0, 0, 0}}
+SpSc1L /: jsOrder[SpSc1L, 0, 1, 0, 1] := {{-1, 1, -1, 1}, {-1, 0, -1, 0}, 
+   {0, 1, 0, 0}, {1, 0, 0, 0}}
+SpSc1L /: jsOrder[SpSc1L, 0, 1, 1, 0] := {{-1, 1, 1, -1}, {-1, 0, 0, -1}, 
+   {0, 1, 0, 0}, {1, 0, 0, 0}}
+SpSc1L /: jsOrder[SpSc1L, 0, 1, 1, 1] := {{-1, 1, 1, 1}, {-1, 0, 0, 0}, 
+   {0, 1, 0, 0}, {0, 0, -1, 0}}
+SpSc1L /: jsOrder[SpSc1L, 1, 0, 1, 1] := {{1, -1, 1, 1}, {0, -1, 0, 0}, 
+   {-1, 0, 0, 0}, {0, 0, -1, 0}}
+SpSc1L /: jsOrder[SpSc1L, 1, 1, 1, 0] := {{1, 1, 1, -1}, {0, 0, 0, -1}, 
+   {0, 1, 0, 0}, {-1, 0, 0, 0}}
+SpSc1L /: jsOrder[SpSc1L, 1, 1, 1, 1] := {{1, 1, 1, 1}, {0, 1, 0, 0}, 
+   {-1, 0, 0, 0}, {0, 0, -1, 0}}
+SpSc1L /: jSymmetries[SpSc1L, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[SpSc1L], "/jSymmetries[SpSc1L, 0, 1, 1, 1]"]]
+SpSc1L /: jSymmetries[SpSc1L, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[SpSc1L], "/jSymmetries[SpSc1L, 1, 1, 1, 1]"]]
+SpSc1L /: LI[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], "/LI[SpSc1L]"]]
+SpSc1L /: LMs[SpSc1L] := {l1}
+SpSc1L /: MappedSectors[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/MappedSectors[SpSc1L]"]]
+SpSc1L /: MIs[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/MIs[SpSc1L]"]]
+SpSc1L /: NDs[SpSc1L] := 4
+SpSc1L /: NonZeroSectors[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/NonZeroSectors[SpSc1L]"]]
+SpSc1L /: Parameters[SpSc1L] := {x, y, d}
+SpSc1L /: PowerShifts[SpSc1L] := {0, 0, 0, 0}
+SpSc1L /: SectorsMappings[SpSc1L] := {}
+SpSc1L /: SectorsPattern[SpSc1L] := {__}
+SpSc1L /: SimpleSectors[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/SimpleSectors[SpSc1L]"]]
+SpSc1L /: SPs[SpSc1L] := {sp[l1, l1], sp[l1, qq], sp[l1, v3], sp[l1, v4]}
+SpSc1L /: SR[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], "/SR[SpSc1L]"]]
+SpSc1L /: Toj[SpSc1L] := {sp[l1, l1] -> j[SpSc1L, 0, 0, -1, 0], 
+   sp[l1, qq] -> (x + j[SpSc1L, 0, 0, -1, 0] - j[SpSc1L, 0, 0, 0, -1])/2, 
+   sp[l1, v3] -> j[SpSc1L, -1, 0, 0, 0], sp[l1, v4] -> j[SpSc1L, 0, -1, 0, 0]}
+SpSc1L /: UniqueSectors[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/UniqueSectors[SpSc1L]"]]
+SpSc1L /: ZerojRule[SpSc1L] := LiteRed`Private`jjj:j[SpSc1L, __] :> 
+   0 /; Module[{LiteRed`Private`jjs = 
+       Rest[List @@ jSector[LiteRed`Private`jjj]]}, 
+     Or @@ (BitOr[LiteRed`Private`jjs, #1] === #1 & ) /@ 
+       {{1, 1, 1, 0}, {1, 1, 0, 1}, {1, 0, 1, 1}}]
+SpSc1L /: ZeroSectors[SpSc1L] := Get[StringJoin[BasisDirectory[SpSc1L], 
+    "/ZeroSectors[SpSc1L]"]]
+SpSc1L /: SectorsMappings[SpSc1L, LiteRed`Private`ns$:(0 | 1)..] := 
+  Cases[SectorsMappings[SpSc1L], HoldPattern[
+    js[SpSc1L, LiteRed`Private`ns$] -> _]]
+SpSc1L::usage = "1-loop basis with 3 external momenta.\nUse \
+Information[SpSc1L] to get basis summary.\nThis string can be redefined by \
+setting SpSc1L::usage=\"\[Ellipsis]\""; Information[SpSc1L, 
+  LongForm -> False]; 
+LiteRed`Private`CheckDefs[SpSc1L]
+BasisDirectory[SpSc1L]
